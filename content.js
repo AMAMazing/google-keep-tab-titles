@@ -18,9 +18,30 @@ function getNoteTitle() {
     }
 }
 
-setInterval(() => {
+function updateTitle() {
     const title = getNoteTitle();
     if (document.title !== title) {
         document.title = title;
     }
-}, 500);
+}
+
+function debounce(func, wait) {
+    let timeout;
+    return function(...args) {
+        const context = this;
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(context, args), wait);
+    };
+}
+
+const debouncedUpdateTitle = debounce(updateTitle, 250  );
+
+const observer = new MutationObserver(debouncedUpdateTitle);
+
+observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+    characterData: true
+});
+
+updateTitle();
