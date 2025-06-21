@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "Google Keep Tab Titles",
+  "version": "1.0",
+  "description": "Dynamically updates Google Keep tab titles to the current note's title.",
+  "permissions": [
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://keep.google.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://keep.google.com/*"
+      ],
+      "js": [
+        "content.js"
+      ]
+    }
+  ],
+  "action": {
+    "default_icon": "icon.png"
+  }
+}
