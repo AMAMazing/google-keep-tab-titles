@@ -28,6 +28,6 @@ The extension should now be installed and active.
 
 The extension uses a content script that runs on `https://keep.google.com/`.
 
-- **`content.js`**: This script is injected into the Google Keep page. It identifies the main text box of the note currently in view to extract its title. It uses a `MutationObserver` to watch for DOM changes, ensuring that the title is updated in real-time as you navigate between notes or edit a title. A debounce function is used to optimize performance by limiting the frequency of title updates.
+- **`content.js`**: This script is injected into the Google Keep page. It identifies the main text box of the note currently in view to extract its title. It uses a `MutationObserver` to watch for DOM changes, ensuring that the title is updated in real-time as you navigate between notes or edit a title. A throttle function is used to optimize performance by limiting the frequency of title updates to once every 50ms. This ensures the title updates feel responsive without causing performance issues.
 - **`background.js`**: This service worker listens for a click on the extension's action icon. When clicked, it opens `https://keep.google.com/` in a new tab.
 - **`manifest.json`**: This file defines the extension's properties, permissions, and scripts. It requests `tabs` permission to interact with the tab and `host_permissions` for `https://keep.google.com/*` to run the content script.

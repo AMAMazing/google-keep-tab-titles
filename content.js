@@ -25,18 +25,21 @@ function updateTitle() {
     }
 }
 
-function debounce(func, wait) {
-    let timeout;
+function throttle(func, limit) {
+    let inThrottle;
     return function(...args) {
         const context = this;
-        clearTimeout(timeout);
-        timeout = setTimeout(() => func.apply(context, args), wait);
+        if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
     };
 }
 
-const debouncedUpdateTitle = debounce(updateTitle, 250  );
+const throttledUpdateTitle = throttle(updateTitle, 50);
 
-const observer = new MutationObserver(debouncedUpdateTitle);
+const observer = new MutationObserver(throttledUpdateTitle);
 
 observer.observe(document.body, {
     childList: true,
